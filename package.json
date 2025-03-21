@@ -20,6 +20,7 @@
   "homepage": "https://github.com/lourivaldo/branch-syncker#readme",
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@actions/github": "^6.0.0"
+    "@actions/github": "^6.0.0",
+    "simple-git": "^3.27.0"
   }
 }
