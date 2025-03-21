@@ -2,19 +2,22 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const simpleGit = require('simple-git');
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-
+async function run() {
   const git = simpleGit('.');
   const status = await git.status();
   console.log(status)
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   // console.log(`The event payload: ${payload}`);
+}
+
+try {
+  // `who-to-greet` input defined in action metadata file
+  const nameToGreet = core.getInput('who-to-greet');
+  console.log(`Hello ${nameToGreet}!`);
+  const time = (new Date()).toTimeString();
+  core.setOutput("time", time);
+  run()
 } catch (error) {
   core.setFailed(error.message);
 }
