@@ -9,6 +9,12 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Git User
+        run: |
+          git config user.name "Branch Sync"
+          git config user.email "sample@mail.com"
       - name: Hello world action step
         uses: ./ # Uses an action in the root directory
         id: hello
