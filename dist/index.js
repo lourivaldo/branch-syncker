@@ -37994,6 +37994,7 @@ async function run() {
   // console.log(status)
   const ORIGIN_BRANCH = core.getInput('origin_branch');
   const BRANCH = core.getInput('branch');
+  console.log(`${ORIGIN_BRANCH}->${BRANCH}`)
 
   await git.checkout(ORIGIN_BRANCH);
   await git.fetch('origin');
