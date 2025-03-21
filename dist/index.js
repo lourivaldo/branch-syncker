@@ -37992,16 +37992,16 @@ const git = simpleGit('.');
 async function run() {
   const status = await git.status();
   // console.log(status)
-  const ORIGIN_BRANCH = core.getInput('origin_branch');
-  const BRANCH = core.getInput('branch');
-  console.log(`${ORIGIN_BRANCH}->${BRANCH}`)
+  const baseBranch = core.getInput('origin_branch');
+  const targetBranch = core.getInput('branch');
+  console.log(`${baseBranch}->${targetBranch}`)
 
-  await git.checkout(ORIGIN_BRANCH);
+  await git.checkout(baseBranch);
   await git.fetch('origin');
-  await git.checkout(BRANCH);
-  await git.rebase(ORIGIN_BRANCH);
-  await git.push('origin', BRANCH, { '--force-with-lease': true });
-
+  await git.checkout(targetBranch);
+  const rebaseResult = await git.rebase(baseBranch);
+  console.log(rebaseResult)
+  await git.push('origin', targetBranch, { '--force-with-lease': true });
 
   // Get the JSON webhook payload for the event that triggered the workflow
   // git checkout ${{ github.event.repository.default_branch }}
