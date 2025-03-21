@@ -1,10 +1,15 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  origin_branch:
+    description: 'Main branch'
     required: true
-    default: 'World'
+    default: 'main'
+  branch:
+    description: 'Branch to send updates'
+    required: true
+    default: 'hotfix'
+
 outputs:
   time: # id of output
     description: 'The time we greeted you'

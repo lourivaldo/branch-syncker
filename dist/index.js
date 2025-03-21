@@ -37991,9 +37991,9 @@ const git = simpleGit('.');
 
 async function run() {
   const status = await git.status();
-  console.log(status)
-  const ORIGIN_BRANCH = core.getInput('ORIGIN_BRANCH');
-  const BRANCH = core.getInput('BRANCH');
+  // console.log(status)
+  const ORIGIN_BRANCH = core.getInput('origin_branch');
+  const BRANCH = core.getInput('branch');
 
   await git.checkout(ORIGIN_BRANCH);
   await git.fetch('origin');
@@ -38012,7 +38012,7 @@ async function run() {
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
+  const nameToGreet = core.getInput('branch');
   console.log(`Hello ${nameToGreet}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
