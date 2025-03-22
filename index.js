@@ -46,19 +46,19 @@ async function notify() {
               "text": "*:red_circle: GitHub Branch Sync \`${targetBranch}\` [failed]*"
             }
           },
-          {
-            "type": "section",
-            "fields": [
-              {
-                "type": "mrkdwn",
-                "text": `*Repo*\n<${html_url}|${name}>`
-              },
-              {
-                "type": "mrkdwn",
-                "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
-              }
-            ]
-          }
+          // {
+          //   "type": "section",
+          //   "fields": [
+          //     {
+          //       "type": "mrkdwn",
+          //       "text": `*Repo*\n<${html_url}|${name}>`
+          //     },
+          //     {
+          //       "type": "mrkdwn",
+          //       "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
+          //     }
+          //   ]
+          // }
         ]
       }
     ]
