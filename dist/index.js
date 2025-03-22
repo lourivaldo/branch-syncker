@@ -46442,8 +46442,7 @@ async function rebaseBranch() {
 
 async function notify() {
   const url = core.getInput('slack-webhook');
-  console.log(url)
-  const { runId } = github.context.payload
+  const { runId } = github.context
   const { name, html_url } = github.context.payload.repository
 
   const webhook = new IncomingWebhook(url);
@@ -46478,9 +46477,6 @@ async function notify() {
 }
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('branch');
-  console.log(`Hello ${nameToGreet}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   rebaseBranch()
