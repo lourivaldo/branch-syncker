@@ -28,9 +28,10 @@ async function rebaseBranch() {
 
 async function notify() {
   const url = core.getInput('slack-webhook');
+  console.log(url)
   const webhook = new IncomingWebhook(url);
   await webhook.send({
-    // text: 'I\'ve got news for you...',
+    text: 'I\'ve got news for you...',
     blocks: [
       {
         "type": "section",
