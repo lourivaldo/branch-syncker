@@ -37,7 +37,7 @@ async function notify() {
         "type": "section",
         "text": {
           "type": "mrkdwn",
-          "text": `*:red_circle: GitHub Branch Sync \`${targetBranch}\` [failed]*`
+          "text": `*:red_circle: Branch sync \`${baseBranch}\`->\`${targetBranch}\` [failed]*`
         }
       },
       {
