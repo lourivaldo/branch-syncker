@@ -32,6 +32,9 @@ async function rebaseBranch() {
 async function notify() {
   const url = core.getInput('slack-webhook');
   console.log(url)
+  const { runId } = github.context.payload
+  const { name, html_url } = github.context.payload.repository
+
   const webhook = new IncomingWebhook(url);
   await webhook.send({
     blocks: [
@@ -49,11 +52,11 @@ async function notify() {
             "fields": [
               {
                 "type": "mrkdwn",
-                "text": "*Repo*\n<https://github.com/${{ github.repository }}|${{ github.repository }}>"
+                "text": `*Repo*\n<${html_url}|${name}>`
               },
               {
                 "type": "mrkdwn",
-                "text": "*Build Logs*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
+                "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
               }
             ]
           }
