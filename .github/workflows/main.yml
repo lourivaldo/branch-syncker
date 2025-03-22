@@ -27,7 +27,7 @@ jobs:
         with:
           origin-branch: 'main'
           branch: 'hotfix'
-          slack-webhook: 'https://hooks.slack.com/services/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'
+          slack-webhook: 'https://hooks.slack.com/services/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'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
