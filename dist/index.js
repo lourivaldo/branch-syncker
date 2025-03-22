@@ -46442,14 +46442,37 @@ async function notify() {
   console.log(url)
   const webhook = new IncomingWebhook(url);
   await webhook.send({
-    text: 'I\'ve got news for you...',
     blocks: [
       {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "*:red_circle: GitHub Branch Sync [failed]*"
-        }
+        "blocks": [
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "*:red_circle: GitHub Branch Sync [failed]*"
+            }
+          },
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "Sync `hotfix` _${{ steps.sync-hotfix.outcome }}_\nSync `cons-eng-beta` _${{ steps.sync-cons-eng-beta.outcome }}_\n"
+            }
+          },
+          {
+            "type": "section",
+            "fields": [
+              {
+                "type": "mrkdwn",
+                "text": "*Repo*\n<https://github.com/${{ github.repository }}|${{ github.repository }}>"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Build Logs*\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
+              }
+            ]
+          }
+        ]
       }
     ]
   });
