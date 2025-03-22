@@ -1,12 +1,15 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  origin_branch:
+  origin-branch:
     description: 'Main branch'
     required: true
     default: 'main'
   branch:
     description: 'Branch to send updates'
+    required: true
+  slack-webhook:
+    description: 'Slack webhook URL'
     required: true
 
 outputs:
