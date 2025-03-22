@@ -46443,15 +46443,15 @@ async function notify() {
   const webhook = new IncomingWebhook(url);
   await webhook.send({
     text: 'I\'ve got news for you...',
-    // blocks: [
-    //   {
-    //     "type": "section",
-    //     "text": {
-    //       "type": "mrkdwn",
-    //       "text": "*:red_circle: GitHub Branch Sync [failed]*"
-    //     }
-    //   }
-    // ]
+    blocks: [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*:red_circle: GitHub Branch Sync [failed]*"
+        }
+      }
+    ]
   });
 }
 
