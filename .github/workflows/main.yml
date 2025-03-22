@@ -25,8 +25,9 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          origin_branch: 'main'
+          origin-branch: 'main'
           branch: 'hotfix'
+          slack-webhook: 'https://hooks.slack.com/services/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'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
