@@ -46416,12 +46416,9 @@ const { IncomingWebhook } = __nccwpck_require__(558);
 
 const baseBranch = core.getInput('origin-branch');
 const targetBranch = core.getInput('branch');
-console.log(github)
-console.log(github.context)
 const git = simpleGit('.');
 
 async function rebaseBranch() {
-
   console.log(`${baseBranch}->${targetBranch}`)
 
   await git.checkout(baseBranch);
@@ -46432,7 +46429,6 @@ async function rebaseBranch() {
     console.log('rebaseResult', rebaseResult)
     await git.push('origin', targetBranch, { '--force-with-lease': true });
     const pushResult = await git.push('origin', targetBranch, { '--force-with-lease': true });
-    console.log('pushResult', pushResult)
   } catch (error) {
     console.log('error')
     console.log(error)
@@ -46483,8 +46479,6 @@ try {
     .catch(() => {
       notify()
     })
-  // const payload = JSON.stringify(github.context.payload, undefined, 2)
-  // // console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }
