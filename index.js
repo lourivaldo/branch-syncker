@@ -17,6 +17,8 @@ async function run() {
   const rebaseResult = await git.rebase(baseBranch);
   console.log(rebaseResult)
   await git.push('origin', targetBranch, { '--force-with-lease': true });
+  const pushResult = await git.push('origin', targetBranch, { '--force-with-lease': true });
+  console.log(pushResult)
 
   // Get the JSON webhook payload for the event that triggered the workflow
   // git checkout ${{ github.event.repository.default_branch }}
