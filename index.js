@@ -5,8 +5,8 @@ const { IncomingWebhook } = require('@slack/webhook');
 
 const baseBranch = core.getInput('origin-branch');
 const targetBranch = core.getInput('branch');
+console.log(github)
 console.log(github.context)
-console.log(github.context.payload)
 const git = simpleGit('.');
 
 async function rebaseBranch() {
