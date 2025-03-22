@@ -3,11 +3,14 @@ const github = require('@actions/github');
 const simpleGit = require('simple-git');
 const { IncomingWebhook } = require('@slack/webhook');
 
+const baseBranch = core.getInput('origin-branch');
+const targetBranch = core.getInput('branch');
+console.log(github.context)
+console.log(github.context.payload)
 const git = simpleGit('.');
 
 async function rebaseBranch() {
-  const baseBranch = core.getInput('origin-branch');
-  const targetBranch = core.getInput('branch');
+
   console.log(`${baseBranch}->${targetBranch}`)
 
   await git.checkout(baseBranch);
@@ -38,14 +41,7 @@ async function notify() {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "*:red_circle: GitHub Branch Sync [failed]*"
-            }
-          },
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "Sync `hotfix` _${{ steps.sync-hotfix.outcome }}_\nSync `cons-eng-beta` _${{ steps.sync-cons-eng-beta.outcome }}_\n"
+              "text": "*:red_circle: GitHub Branch Sync \`${targetBranch}\` [failed]*"
             }
           },
           {
