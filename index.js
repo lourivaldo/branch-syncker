@@ -33,32 +33,32 @@ async function notify() {
   const webhook = new IncomingWebhook(url);
   await webhook.send({
     text: 'wfef',
-    // blocks: [
-    //   {
-    //     "blocks": [
-    //       {
-    //         "type": "section",
-    //         "text": {
-    //           "type": "mrkdwn",
-    //           "text": `*:red_circle: GitHub Branch Sync \`${targetBranch}\` [failed]*`
-    //         }
-    //       },
-    //       {
-    //         "type": "section",
-    //         "fields": [
-    //           {
-    //             "type": "mrkdwn",
-    //             "text": `*Repo*\n<${html_url}|${name}>`
-    //           },
-    //           {
-    //             "type": "mrkdwn",
-    //             "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
-    //           }
-    //         ]
-    //       }
-    //     ]
-    //   }
-    // ]
+    blocks: [
+      {
+        "blocks": [
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": `*:red_circle: GitHub Branch Sync \`${targetBranch}\` [failed]*`
+            }
+          },
+          // {
+          //   "type": "section",
+          //   "fields": [
+          //     {
+          //       "type": "mrkdwn",
+          //       "text": `*Repo*\n<${html_url}|${name}>`
+          //     },
+          //     {
+          //       "type": "mrkdwn",
+          //       "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
+          //     }
+          //   ]
+          // }
+        ]
+      }
+    ]
   });
 }
 
