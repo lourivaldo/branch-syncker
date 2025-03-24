@@ -59,19 +59,13 @@ async function notify(fromBranch, toBranch) {
 const sourceBranch = core.getInput('source-branch');
 const targetBranch = core.getInput('target-branch');
 
-const result = {
-  sourceBranch,
-  targetBranch,
-  success: false
-}
 try {
   rebaseBranch(sourceBranch, targetBranch)
     .then(() => {
-      core.setOutput("rebase", result);
+      core.setOutput("rebase", true);
     })
     .catch(() => {
-      result.success = true
-      core.setOutput("rebase", result);
+      core.setOutput("rebase", false);
       notify(sourceBranch, targetBranch)
     })
 } catch (error) {

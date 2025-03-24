@@ -30,8 +30,6 @@ jobs:
           target-branch: 'squad-beta'
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
       - name: Merge output main to hotfix
-        run: echo "The result ${{ toJSON(steps.hotfix.outputs.rebase) }}"
-      - name: Merge output main to hotfix
-        run: echo "The result ${{ steps.hotfix.outputs.rebase.sourceBranch }}->${{ steps.hotfix.outputs.rebase.targetBranch }}:${{ steps.hotfix.outputs.rebase.success }}"
+        run: echo "The result main->hotfix:${{ steps.hotfix.outputs.rebase }}"
       - name: Merge output main to squad-beta
-        run: echo "The result ${{ steps.squad-beta.outputs.rebase.sourceBranch }}->${{ steps.squad-beta.outputs.rebase.targetBranch }}:${{ steps.squad-beta.outputs.rebase.success }}"
+        run: echo "The result main->squad-beta:${{ steps.squad-beta.outputs.rebase }}"
