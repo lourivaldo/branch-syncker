@@ -39684,6 +39684,51 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 4351:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(2467);
+const github = __nccwpck_require__(8799);
+const {IncomingWebhook} = __nccwpck_require__(558);
+
+async function notify() {
+  const url = core.getInput('slack-webhook');
+  const { runId } = github.context
+  const { name, html_url } = github.context.payload.repository
+
+  const webhook = new IncomingWebhook(url);
+  await webhook.send({
+    blocks: [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": `*:red_circle: Branch rebase \`${baseBranch}\`->\`${targetBranch}\` [failed]*`
+        }
+      },
+      {
+        "type": "section",
+        "fields": [
+          {
+            "type": "mrkdwn",
+            "text": `*Repo*\n<${html_url}|${name}>`
+          },
+          {
+            "type": "mrkdwn",
+            "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
+          }
+        ]
+      }
+    ]
+  });
+}
+
+module.exports = {
+  notify
+}
+
+/***/ }),
+
 /***/ 3424:
 /***/ ((module) => {
 
@@ -46413,59 +46458,28 @@ const core = __nccwpck_require__(2467);
 const github = __nccwpck_require__(8799);
 const simpleGit = __nccwpck_require__(7308);
 const { IncomingWebhook } = __nccwpck_require__(558);
+const {notify} = __nccwpck_require__(4351);
 
-const baseBranch = core.getInput('origin-branch');
-const targetBranch = core.getInput('branch');
+const index_baseBranch = core.getInput('origin-branch');
+const index_targetBranch = core.getInput('branch');
 const git = simpleGit('.');
 
 async function rebaseBranch() {
-  console.log(`${baseBranch}->${targetBranch}`)
+  console.log(`${index_baseBranch}->${index_targetBranch}`)
 
-  await git.checkout(baseBranch);
+  await git.checkout(index_baseBranch);
   await git.fetch('origin');
-  await git.checkout(targetBranch);
+  await git.checkout(index_targetBranch);
   try {
-    const rebaseResult = await git.rebase([baseBranch]);
+    const rebaseResult = await git.rebase([index_baseBranch]);
     console.log('rebaseResult', rebaseResult)
-    await git.push('origin', targetBranch, { '--force-with-lease': true });
-    const pushResult = await git.push('origin', targetBranch, { '--force-with-lease': true });
+    await git.push('origin', index_targetBranch, { '--force-with-lease': true });
+    const pushResult = await git.push('origin', index_targetBranch, { '--force-with-lease': true });
   } catch (error) {
     console.log('error')
     console.log(error)
     throw new Error('Rebase conflict')
   }
-}
-
-async function notify() {
-  const url = core.getInput('slack-webhook');
-  const { runId } = github.context
-  const { name, html_url } = github.context.payload.repository
-
-  const webhook = new IncomingWebhook(url);
-  await webhook.send({
-    blocks: [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `*:red_circle: Branch rebase \`${baseBranch}\`->\`${targetBranch}\` [failed]*`
-        }
-      },
-      {
-        "type": "section",
-        "fields": [
-          {
-            "type": "mrkdwn",
-            "text": `*Repo*\n<${html_url}|${name}>`
-          },
-          {
-            "type": "mrkdwn",
-            "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
-          }
-        ]
-      }
-    ]
-  });
 }
 
 try {

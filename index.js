@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const simpleGit = require('simple-git');
 const { IncomingWebhook } = require('@slack/webhook');
+const {notify} = require("./slack");
 
 const baseBranch = core.getInput('origin-branch');
 const targetBranch = core.getInput('branch');
@@ -23,38 +24,6 @@ async function rebaseBranch() {
     console.log(error)
     throw new Error('Rebase conflict')
   }
-}
-
-async function notify() {
-  const url = core.getInput('slack-webhook');
-  const { runId } = github.context
-  const { name, html_url } = github.context.payload.repository
-
-  const webhook = new IncomingWebhook(url);
-  await webhook.send({
-    blocks: [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `*:red_circle: Branch rebase \`${baseBranch}\`->\`${targetBranch}\` [failed]*`
-        }
-      },
-      {
-        "type": "section",
-        "fields": [
-          {
-            "type": "mrkdwn",
-            "text": `*Repo*\n<${html_url}|${name}>`
-          },
-          {
-            "type": "mrkdwn",
-            "text": `*Build Logs*\n<${html_url}/actions/runs/${runId}|View Logs>`
-          }
-        ]
-      }
-    ]
-  });
 }
 
 try {
