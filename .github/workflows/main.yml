@@ -9,16 +9,12 @@ permissions:
 jobs:
   branch-syncker:
     runs-on: ubuntu-latest
-    name: Merge branches
+    name: Sync branches
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-#      - name: Setup Git User
-#        run: |
-#          git config user.name "Branch Sync"
-#          git config user.email "sample@mail.com"
       - name: Sync main to hotfix
         uses: ./
         id: hotfix
@@ -26,5 +22,12 @@ jobs:
           source-branch: 'main'
           target-branch: 'hotfix'
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-      - name: Get the output time
-        run: echo "The result ${{ steps.hotfix.outputs.rebase.sourceBranch }}->${{ steps.hotfix.outputs.rebase.targetBranch }}:${{ steps.hotfix.outputs.success }}"
+      - name: Sync main to squad-beta
+        uses: ./
+        id: squad-beta
+        with:
+          source-branch: 'main'
+          target-branch: 'squad-beta'
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Merge output
+        run: echo "The result ${{ steps.squad-beta.outputs.rebase.sourceBranch }}->${{ steps.squad-beta.outputs.rebase.targetBranch }}:${{ steps.squad-beta.outputs.rebase.success }}"
