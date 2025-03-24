@@ -3,7 +3,12 @@ const github = require('@actions/github');
 const { IncomingWebhook } = require('@slack/webhook');
 const simpleGit = require('simple-git');
 
-const git = simpleGit('.');
+const user = core.getInput('user');
+const email = core.getInput('email');
+
+const git = simpleGit('.')
+  .addConfig('user.name', user)
+  .addConfig('user.email', email);
 
 async function rebaseBranch(sourceBranch, targetBranch) {
   console.log(`${sourceBranch}->${targetBranch}`)

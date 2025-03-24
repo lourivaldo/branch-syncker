@@ -7,27 +7,24 @@ permissions:
   pull-requests: write
 
 jobs:
-  hello_world_job:
+  branch-syncker:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Merge branches
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Git User
-        run: |
-          git config user.name "Branch Sync"
-          git config user.email "sample@mail.com"
-      - name: Hello world action step
-        uses: ./ # Uses an action in the root directory
-        id: hello
+#      - name: Setup Git User
+#        run: |
+#          git config user.name "Branch Sync"
+#          git config user.email "sample@mail.com"
+      - name: Sync main to hotfix
+        uses: ./
+        id: hotfix
         with:
-          origin-branch: 'main'
-          branch: 'hotfix'
+          source-branch: 'main'
+          target-branch: 'hotfix'
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-      # Use the output from the `hello` step
       - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+        run: echo "The result ${{ steps.hotfix.outputs.sourceBranch }}->${{ steps.hotfix.outputs.targetBranch }}:${{ steps.hotfix.outputs.success }}"

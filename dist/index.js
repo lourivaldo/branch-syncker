@@ -46414,7 +46414,12 @@ const github = __nccwpck_require__(8799);
 const { IncomingWebhook } = __nccwpck_require__(558);
 const simpleGit = __nccwpck_require__(7308);
 
-const git = simpleGit('.');
+const user = core.getInput('user');
+const email = core.getInput('email');
+
+const git = simpleGit('.')
+  .addConfig('user.name', user)
+  .addConfig('user.email', email);
 
 async function rebaseBranch(sourceBranch, targetBranch) {
   console.log(`${sourceBranch}->${targetBranch}`)

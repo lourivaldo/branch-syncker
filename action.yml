@@ -3,7 +3,6 @@ description: 'Merge branches with rebase and push changes to target branch'
 inputs:
   source-branch:
     description: 'Source branch'
-    required: true
     default: 'main'
   target-branch:
     description: 'Branch to send updates'
@@ -11,6 +10,12 @@ inputs:
   slack-webhook:
     description: 'Slack webhook URL'
     required: true
+  user:
+    description: 'Git user'
+    default: 'Branch Sync'
+  email:
+    description: 'Git email'
+    default: 'sample@mail.com'
 outputs:
   rebase:
     description: 'The result of the rebase'
