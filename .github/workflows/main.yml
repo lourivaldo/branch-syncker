@@ -27,4 +27,4 @@ jobs:
           target-branch: 'hotfix'
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
       - name: Get the output time
-        run: echo "The result ${{ steps.hotfix.outputs.sourceBranch }}->${{ steps.hotfix.outputs.targetBranch }}:${{ steps.hotfix.outputs.success }}"
+        run: echo "The result ${{ steps.hotfix.outputs.rebase.sourceBranch }}->${{ steps.hotfix.outputs.rebase.targetBranch }}:${{ steps.hotfix.outputs.success }}"
