@@ -46482,8 +46482,8 @@ try {
     })
     .catch(() => {
       result.success = true
-      core.setOutput("rebase", result);
       notify(sourceBranch, targetBranch)
+      core.setOutput("rebase", result);
     })
 } catch (error) {
   core.setFailed(error.message);
